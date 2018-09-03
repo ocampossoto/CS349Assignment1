@@ -2,6 +2,7 @@ package org.example.assignment1;
 
 public class Items {
     String Data;
+    int Position;
 
     public Items(){
 
@@ -11,5 +12,12 @@ public class Items {
     }
     public String getData() {
         return Data;
+    }
+
+    public int getPosition(){
+        return Position;
+    }
+    public void setPosition(int position){
+        Position = position;
     }
 }

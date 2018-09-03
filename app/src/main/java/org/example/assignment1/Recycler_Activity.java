@@ -34,7 +34,7 @@ public class Recycler_Activity extends AppCompatActivity {
     }
 
     private void prepareData() {
-        for(int i = 1; i <= 15; i++){
+        for(int i = 1; i <= 50; i++){
             itemsList.add(new Items("Recycler item: "+ i));
 
         }
