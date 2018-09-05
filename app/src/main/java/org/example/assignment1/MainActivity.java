@@ -22,13 +22,12 @@ public class MainActivity extends AppCompatActivity {
     //list view things
     ListView listview;
     final ArrayList<String> list_data = new ArrayList<String>();
-    ArrayAdapter ListAdaapter;
+    ArrayAdapter ListAdapter;
 
     //recycler view stuff
     private List<Items> itemsList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private Item_Adapter mAdapter;
-
+    private Item_Adapter recycler_Adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,30 +35,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listview =  findViewById(R.id.List_View_Object); // list view object
-        recyclerView = (RecyclerView) findViewById(R.id.Rec_View); //recycler view object
+        recyclerView = findViewById(R.id.Rec_View); //recycler view object
 
         final Button Recycle_View_Button =  findViewById(R.id.RecycleerView_Button); // recycler view button
         final Button List_View_Button =  findViewById(R.id.ListView_button); // list view button
 
         //set up list view adapter
-        ListAdaapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list_data);
-        listview.setAdapter(ListAdaapter);
+        ListAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list_data);
+        listview.setAdapter(ListAdapter);
 
         //setup recycle view adapter
-        mAdapter = new Item_Adapter(itemsList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recycler_Adapter = new Item_Adapter(itemsList);
+        RecyclerView.LayoutManager LayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(LayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(recycler_Adapter);
 
 
         List_View_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 create_list_View();
-
+                recycler_Adapter.clear();
+                recycler_Adapter.notifyDataSetChanged();
             }
         });
 
@@ -67,11 +66,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 create_recycle_view();
-
-                ListAdaapter.clear();
-                ListAdaapter.notifyDataSetChanged();
-                //Intent intent = new Intent(MainActivity.this, Recycler_Activity.class);
-                //startActivity(intent);
+                ListAdapter.clear();
+                ListAdapter.notifyDataSetChanged();
             }
         });
 
@@ -80,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     protected  void create_list_View(){
-        ListAdaapter.clear();
+        ListAdapter.clear();
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -91,22 +87,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         for (int i = 1; i <= 20; ++i) {
             list_data.add("ListView Item: " + i);
         }
 
-        ListAdaapter.notifyDataSetChanged();
+        ListAdapter.notifyDataSetChanged();
 
     }
     protected void create_recycle_view(){
-        mAdapter.clear();
+        recycler_Adapter.clear();
 
         for(int i = 1; i <= 20; i++){
-            itemsList.add(new Items("Recycler item: "+ i));
+            itemsList.add(new Items("Recycler item: " + i));
 
         }
-        mAdapter.notifyDataSetChanged();
+        recycler_Adapter.notifyDataSetChanged();
     }
 
 }
